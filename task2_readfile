@@ -1,0 +1,98 @@
+🔹Step 1:Questions
+some meaningful questions we might ask:
+
+Does GRE Score strongly affect the Chance of Admit?
+
+Which matters more — TOEFL Score or CGPA?
+
+Do LOR/Recommendation Strength and SOP Strength influence admissions?
+
+Are there outliers (like very high GRE but low admit chance)?
+
+🔹Step 2: Explore Data Structure
+import pandas as pd
+
+# Load dataset
+df = pd.read_excel("Admission_Predict.xls")
+
+# Basic info
+print(df.info())
+print(df.head())
+
+
+👉 This shows:
+
+Number of rows/columns
+
+Data types (int, float, object)
+
+Sample data
+
+🔹 Step 3: Summary Statistics
+print(df.describe())
+
+
+This gives:
+
+Mean, Median, Min, Max, Std for each variable
+
+Helps find extreme values (outliers)
+
+🔹 Step 4: Detect Missing or Bad Data
+print(df.isnull().sum())
+
+
+👉 This checks if any values are missing.
+
+🔹 Step 5: Identify Trends & Patterns
+GRE vs Admission Chance
+import matplotlib.pyplot as plt
+
+plt.scatter(df["GRE Score"], df["Chance of Admit "])
+plt.xlabel("GRE Score")
+plt.ylabel("Chance of Admit")
+plt.title("GRE vs Chance of Admit")
+plt.show()
+
+CGPA vs Admission Chance
+plt.scatter(df["CGPA"], df["Chance of Admit "])
+plt.xlabel("CGPA")
+plt.ylabel("Chance of Admit")
+plt.title("CGPA vs Chance of Admit")
+plt.show()
+
+
+👉 You’ll likely see that higher GRE/CGPA → higher Chance of Admit.
+
+🔹 Step 6: Test Hypotheses (Statistics)
+
+Example Hypothesis:
+💡 “Higher GRE scores increase the chance of admission.”
+
+We can check correlation:
+
+correlation = df.corr()
+print(correlation["Chance of Admit "].sort_values(ascending=False))
+
+
+👉 This shows which features have the strongest relationship with admission chances.
+
+🔹 Step 7: Detect Data Issues
+
+Things to look for:
+
+Any duplicate rows? → df.duplicated().sum()
+
+Any weird values (like GRE < 200, CGPA > 10)?
+
+Are all values in realistic ranges?
+
+🔹 Step 8: Visualization (Big Picture)
+import seaborn as sns
+
+# Correlation Heatmap
+sns.heatmap(df.corr(), annot=True, cmap="coolwarm")
+plt.title("Correlation Heatmap")
+plt.show()
+
+
